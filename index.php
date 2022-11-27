@@ -21,35 +21,42 @@ $bot = new PHPTelebot(readToken("token"), readToken("username"));
 $bot->cmd('/ping','yes');
 
 // start cmd & cmd list
-$bot->cmd('/start',"Welcome to XppaiWRT\n/cmdlist to see all comand\nTelegram Support : @OppaiCyber");
+$bot->cmd('/start',"Welcome to XppaiWRT\n/cmdlist to see all comand\nTelegram Support : @MasWayVPN");
 $bot->cmd('/cmdlist', function () {
     $options = ['parse_mode' => 'html','reply' => true];
     return Bot::sendMessage("<code>
-📁Aria2 Command
- ↳/aria2add      | Add task
- ↳/aria2stats    | Aria2 status
- ↳/aria2pause    | Pause all
- ↳/aria2resume   | Resume all
 📁OpenClash Command
- ↳/oc        | OC Information
- ↳/proxies   | Proxies status 
- ↳/rules     | Rule list 
+ /oc           | OC Information
+ /proxies   | Proxies status 
+ /rules       | Rule list 
 📁MyXL Command 
- ↳/myxl      | Bandwidth usage 
- ↳/setxl 087 | Set default number
+ /myxl         | Bandwidth usage 
+ /setxl 087 | Set default number
 📁System Information
- ↳/vnstat    | Bandwidth usage 
- ↳/memory    | Memory status 
- ↳/myip      | Get ip details 
- ↳/speedtest | Speedtest 
- ↳/ping      | Ping bot
- ↳/sysinfo   | System Information</code>",$options);
+ /vnstat        | Bandwidth usage 
+ /memory    | Memory status 
+ /myip          | Get ip details 
+ /speedtest | Speedtest 
+ /ping           | Ping bot
+ /free            | Free space
+ /uptime       | Durasi router on"
+ /sysinfo      | System Information</code>",$options);
 });
 
 // OpenWRT Command 
 $bot->cmd('/proxies', function () {
     $options = ['parse_mode' => 'html','reply' => true];
     return Bot::sendMessage("<code>".Proxies()."</code>",$options);
+});
+
+$bot->cmd('/free', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("src/plugins/free.sh")."</code>",$options);
+});
+
+$bot->cmd('/uptime', function () {
+    $options = ['parse_mode' => 'html','reply' => true];
+    return Bot::sendMessage("<code>".shell_exec("src/plugins/uptime.sh")."</code>",$options);
 });
 
 $bot->cmd('/vnstat', function ($input) {
